@@ -172,14 +172,15 @@ class Rectangle {
 
 void gameCicle(GLFWwindow* window){
     Circle circle = Circle(0.0f, 0.0f, 0.120f,0.002f);
-    Rectangle rectangle(1.20f, -0.3f, 0.3f, 0.7f, 0.4f); 
+    Rectangle rectangleUp(1.20f, -0.3f, 0.3f, 0.7f, 0.4f); 
+    Rectangle  rectangleDown = Rectangle(1.20f, -0.3f, 0.3f, 0.7f, 0.4f);
     
     while (!glfwWindowShouldClose(window)){
         
         glClear(GL_COLOR_BUFFER_BIT); // pulisce il buffer colori
         glColor3f(1.0f,1.0f,1.0f); // setto il colore dei modelli
-        rectangle.drawRectangle();
-        rectangle.physic();
+        rectangleUp.drawRectangle();
+        rectangleUp.physic();
         circle.gravity();
         circle.processInput(window);
 

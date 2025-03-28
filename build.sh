@@ -1,5 +1,5 @@
 #bin/sh
 
-exeName="opengl_test"
+exeName="superGioco"
 
 g++ main.cc -o $exeName -lglfw -lGL && ./$exeName

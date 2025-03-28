@@ -1,7 +1,6 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <cmath>
-#include <unistd.h>
 #include <vector>
 #include <chrono>
 
@@ -10,7 +9,6 @@
 #define XMAX 1.33f
 #define YMAX 1.0f
 #define DEBOUNCE 200
-#define MAXRECTANGLES
 #define G -9.8 * pow(10, -3)
 #define DELTA 0.00694f  // approssimiamo per i  144
 
@@ -79,7 +77,7 @@ class Circle {
             int time_passed = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastPressTime).count();
 
             if(time_passed > DEBOUNCE){
-                this->vy = 0.0085f;  // Imposta la velocità verticale per il salto
+                this->vy = 0.007f;  // Imposta la velocità verticale per il salto
                 lastPressTime = now;
             }
             
@@ -93,10 +91,21 @@ class Circle {
         // Se il cerchio tocca il suolo
         if ((this->cy - this->radius) <= YMIN) {
             this->cy = YMIN + this->radius;  // Imposta la posizione del cerchio sulla superficie
-            this->vy *= -0.8f;  // Inverte e riduce la velocità verticale per il rimbalzo
+            this->vy *= -0.5f;  // Inverte e riduce la velocità verticale per il rimbalzo
     
             // Se la velocità verticale è molto bassa, ferma la palla
             if (std::fabs(this->vy) < 0.001f) {
+                this->vy = 0;  // Ferma la palla q uando la velocità è troppo bassa per rimbalzare
+            }
+        }
+
+        if( (this->cy + this->radius) >YMAX) {
+            ; // Imposta la posizione del cerchio sulla superficie
+            this->vy *= -0.4;  // Inverte e riduce la velocità verticale per il rimbalzo
+            this->cy -=  this->radius;
+    
+            // Se la velocità verticale è molto bassa, ferma la palla
+            if (std::fabs(this->vy) < 0.001f && this->vy < 0) {
                 this->vy = 0;  // Ferma la palla quando la velocità è troppo bassa per rimbalzare
             }
         }
@@ -196,7 +205,7 @@ void gameCicle(GLFWwindow* window){
         glColor3f(1.0f,1.0f,1.0f); // setto il colore dei modelli
         auto now = std::chrono::steady_clock::now();
         int time_since_last_rect = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastRectangleTime).count();
-        if (time_since_last_rect > 700) { // Nuovo ostacolo ogni 0.7 secondi
+        if (time_since_last_rect > 400) { // Nuovo ostacolo ogni 0.7 secondi
             rectangles.push_back(createRandomRectangle());
             lastRectangleTime = now;
         }

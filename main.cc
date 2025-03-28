@@ -53,22 +53,6 @@ class Circle {
    
 
     void processInput(GLFWwindow* win) {
-        // Gestione dei movimenti orizzontali
-        /*
-        if (glfwGetKey(win, GLFW_KEY_W) == GLFW_PRESS && (this->cy + this->radius) < YMAX) {
-            this->cy += this->speed;
-        }
-        if (glfwGetKey(win, GLFW_KEY_S) == GLFW_PRESS && (this->cy - this->radius) > YMIN) {
-            this->cy -= this->speed;
-        }
-        if (glfwGetKey(win, GLFW_KEY_A) == GLFW_PRESS && (this->cx - this->radius) > XMIN) {
-            this->cx -= this->speed;
-        }
-        if (glfwGetKey(win, GLFW_KEY_D) == GLFW_PRESS && (this->cx + this->radius) < XMAX) {
-            this->cx += this->speed;
-        }
-
-        */
     
         // Gestione del salto
         if (glfwGetKey(win, GLFW_KEY_SPACE) == GLFW_PRESS) /*&& (this->cy - this->radius) <= YMIN && std::fabs(this->vy) < 0.01f)*/ {
@@ -148,37 +132,18 @@ class Rectangle {
 
     
 };
-/*
-    void createRectangle(){
-    float value1 = 1.20f;
-    float value2 = -0.3f;
-    float value3 = 0.3f;
-    float value4 = 0.7f;
-    float value5 = 0.4f;
-
-    std::vector<Rectangle> rectangles;
-    int i = 0;
-    while( i < 10){
-        Rectangle rec = Rectangle(value1, value2, value3, value4, value5);
-        rectangles.push_back(rec);
-        rec.drawRectangle();
-        rec.moveLeft();
-        //sleep(3);
-    }
-}
-
-
-*/
 
 void gameCicle(GLFWwindow* window){
     Circle circle = Circle(0.0f, 0.0f, 0.120f,0.002f);
-    Rectangle rectangleUp(1.20f, -0.3f, 0.3f, 0.7f, 0.4f); 
-    Rectangle  rectangleDown = Rectangle(1.20f, -0.3f, 0.3f, 0.7f, 0.4f);
+    Rectangle rectangleDown(1.20f, -0.3f, 0.3f, 0.7f, 0.4f); 
+    Rectangle  rectangleUp = Rectangle(1.2f, 1.0f, 0.3f, 0.7f, 0.4f);
     
     while (!glfwWindowShouldClose(window)){
         
         glClear(GL_COLOR_BUFFER_BIT); // pulisce il buffer colori
         glColor3f(1.0f,1.0f,1.0f); // setto il colore dei modelli
+        rectangleDown.drawRectangle();
+        rectangleDown.physic();
         rectangleUp.drawRectangle();
         rectangleUp.physic();
         circle.gravity();
